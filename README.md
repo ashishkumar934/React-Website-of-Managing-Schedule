@@ -1,68 +1,136 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This website is build using the REACT and Firebase Database, Firebase hosting. Website url:-https://schedule-managing-app.web.app/.
 
-## Available Scripts
+Following are my personal notes :- 
 
-In the project directory, you can run:
 
-### `npm start`
+Here We will discuss certain commands of the react for Learning:-
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. map 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+var numbers = [1, 2, 3, 4, 5];   
+const doubleValue = numbers.map((number)=>{   
+    return (number * 2);   
+});  
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+TRAVERSING THE LIST:-
 
-### `npm run build`
+  const listItems = myLists.map((myList) =>  
+    <li>{myList}</li>  
+  ); 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. For Changing the INPUT in REact:-
+const [input,setInput]=setState("");
+<input value={input} onChange={(event) => setInput("hello")} />
 
-### `npm run eject`
+3. For appending into the array of the states use (... array_name):-
+  eg:- setTodos([...todos, { input }]);
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. preventDefault() in the submit function will prevent the page from refreshing itself.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. disabled={!input} in the button if we want the button to be disabled when the input is None.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6. import the component from :- import Todo from "./Todo";
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+7. example of calling the component:-
 
-## Learn More
+	<ul>
+        {todos.map((todo) => (
+          <Todo todo={todo} />
+        ))}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+8. We can add the material UI functionality by directly adding into the components.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+9. g. When the app loads we want to fetch the data and update our page according to those values.
+	so, for that use the REACT hook useEffect().
 
-### Code Splitting
+useEffect(function,dependancies); :- dependancies is array. Whenever a dependancy is changed useEffect hook is called.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+10. Commands for collecting from the databse using useEffect:-
+	useEffect(() => {
+       db.collection("todos").onSnapshot((snapshot) => {
+       setTodos(snapshot.docs.map((doc) => doc.data().todo_text));
+       }) ;
+       }, []);
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
+    Commands for adding into the database:- 
+	db.collection("todos").add({
+      todo_text: input,
+    });
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+11. Emoji Plugin is the Rocket Emoji.
 
-### Advanced Configuration
+12. Adding the timestamp in our data so that the data is sorted according to the time we have pushed the data.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+		timestamp: firebase.firestore.FieldValue.serverTimestamp()
 
-### Deployment
+13. for sorting by the timestamp add .orderBy(key,"asecordesc") before the onSnapshot like:-
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+	db.collection("todos")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setTodos(snapshot.docs.map((doc) => doc.data().todo_text));
+      });
+  }, []);
 
-### `npm run build` fails to minify
+14. adding the delete functionality:-
+	we should keep the id to know which document we want to delete:-
+	
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+15. attaching the Material Ui icon download the icon separately.
+16. attach the modal. 
+
+
+
+Following are the notes for setting the environment:- 
+
+1. npx create-react-app app_name
+2. npm start(if not running then do npm cache clean --force then again npm start).
+3. If you don't have a package.json yet then you can create one with: npm init.
+4. 
+
+For the Firebase Database:- 
+a. Go to console:- Add Project:- Continue:- Go to the Settings :- Click on the </> symbol.:- Register app by selecting any name:- Then install the CLI firebase for hosting:- Rest of the steps later on.
+b. Go to console.:- click on the config and that data will help in configuration of our project.
+After copying the config come afterwards on it. Now, develop the application.
+c. Go to the Database.
+d. Cloud Firestore: -database.
+
+
+
+e. After developing the frontend look now we will connect it with the firebase:-
+
+	install thr firebase:- npm i firebase:- It will install all the firebase dependancies.
+import firebase from "firebase";
+const firebaseApp=firebase.initializeApp({
+	config.
+});
+
+const db= firebaseApp.firestore(); // making a database file and exporting that.
+export {db};
+
+f. create database:- After creating the databse our next aim is to connect it to the react app and start pulling out the information.
+
+
+e. after connecting the database and the functionalities. We can host our website.
+
+	by following steps:- in terminal write (firebase init):- select hosting by pressing space and enter:- select the existing project:- select your project:- type build:- enter y:- then it's done :- run (npm run build):- firebase deploy. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
